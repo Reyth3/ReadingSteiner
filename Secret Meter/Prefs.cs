@@ -17,6 +17,7 @@ namespace Secret_Meter
         public bool AlwaysOnTop { get; set; }
         public double PosX { get; set; }
         public double PosY { get; set; }
+        public bool MuteSound { get; set; }
         public TimeRange Range { get; set; }
 
 
@@ -43,6 +44,7 @@ namespace Secret_Meter
             prefs.AlwaysOnTop = true;
             prefs.PosX = scr.Bounds.Width - w.Width;
             prefs.PosY = scr.Bounds.Height - w.Height - 64;
+            prefs.MuteSound = false;
             prefs.Range = new TimeRange();
             prefs.Range.endDate = new DateTime(2010, 8, 13, 19, 0, 0);
             var xml = new MemoryStream();

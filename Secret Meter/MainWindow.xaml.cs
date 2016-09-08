@@ -1,5 +1,5 @@
-﻿using CafeOS;
-using PropertyChanged;
+﻿using PropertyChanged;
+using test;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,27 +29,39 @@ namespace Secret_Meter
         {
             InitializeComponent();
             Current = this;
+            prefs = Prefs.LoadPrefs();
         }
 
         Divergence div;
         public Prefs prefs;
-        UserActivityHook uah = new UserActivityHook(true);
+        UserActivityHook uah;
+        Random r = new Random();
+        double realignChance = 0.0125574;
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var p = Prefs.LoadPrefs();
-            Topmost = p.AlwaysOnTop;
-            Top = p.PosY;
-            Left = p.PosX;
+            Topmost = prefs.AlwaysOnTop;
+            Top = prefs.PosY;
+            Left = prefs.PosX;
             div = new Divergence();
             var d = dsds();
-            prefs = p;
-            uah.Start(true);
+
+            uah = new UserActivityHook();
+            uah.Start();
+            uah.KeyDown += KeyboardActivity;
             uah.OnMouseActivity += MouseActivity;
+            uah.KeyDown += KeyboardActivity;
         }
 
         private void MouseActivity(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (e.Clicks >= 1)
+            if (e.Clicks >= 1 && r.NextDouble() < realignChance)
+                realignTrigger = true;
+        }
+
+        private void KeyboardActivity(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.Enter && r.NextDouble() < realignChance) || (e.Alt && e.KeyCode == Keys.F4 && r.NextDouble() < 0.2))
                 realignTrigger = true;
         }
 
@@ -69,14 +81,16 @@ namespace Secret_Meter
 
         async Task Realign()
         {
-            realignTrigger = false;
-            var r = new Random();
+            realignTrigger = true;
             var start = 9.9975f;
             var time = 25d;
             int it = 0;
             var mp = new MediaPlayer();
-            mp.Open(new Uri(Directory.GetCurrentDirectory()+@"\realign.wav"));
-            mp.Play();
+            if (!prefs.MuteSound)
+            {
+                mp.Open(new Uri(Directory.GetCurrentDirectory() + @"\realign.wav"));
+                mp.Play();
+            }
             await Task.Delay(500);
             for (;;)
             {
@@ -88,10 +102,12 @@ namespace Secret_Meter
                     break;
                 it++;
             }
+            realignTrigger = false;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            uah.Stop();
             prefs.SavePrefs();
         }
 
