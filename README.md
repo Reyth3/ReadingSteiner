@@ -3,7 +3,7 @@ A counter/timer of sorts for Windows operating systems stylized to look like the
 #What does that do exactly?
 The app lets you set the time range that will be checked against the current time. If current time is exactly `startTime`, the returned value equals `0.000000`. When current time it's halfway through the range the returned value is `0.50000` and so on.
 #Recent changes:
-* Implemented /u/Hlug2340](https://www.reddit.com/user/Hlug2340)'s idea -- the meter realigns on leeft click/enter key press instead of random intervals;
+* Implemented [/u/Hlug2340](https://www.reddit.com/user/Hlug2340)'s idea -- the meter realigns on leeft click/enter key press instead of random intervals;
 * Added option to mute sound in `config.xml`;
 * Gitted the source code;
 
