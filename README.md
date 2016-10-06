@@ -1,5 +1,5 @@
 # ReadingSteiner
-A counter/timer of sorts for Windows operating systems stylized to look like the divergence meter from Steins;Gate Viual Npvel
+A counter/timer of sorts for Windows operating systems stylized to look like the divergence meter from Steins;Gate Visual Novel
 #What does that do exactly?
 The app lets you set the time range that will be checked against the current time. If current time is exactly `startTime`, the returned value equals `0.000000`. When current time it's halfway through the range the returned value is `0.50000` and so on.
 #Recent changes:
