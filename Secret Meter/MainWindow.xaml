@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Secret_Meter"
         mc:Ignorable="d"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Title="Divergence Meter" Height="46" Width="189" Loaded="Window_Loaded" Closing="Window_Closing" MouseDown="Window_MouseDown_1" >
+        Title="Divergence Meter" Height="46" Width="189" Loaded="Window_Loaded" Closing="Window_Closing" MouseDown="Window_MouseDown_1" MouseRightButtonUp="OpenSettings" >
     <Window.Resources>
         <local:ImgConv x:Key="ic" />
         <DataTemplate x:Key="numCol">

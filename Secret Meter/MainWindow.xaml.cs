@@ -74,6 +74,8 @@ namespace Secret_Meter
             {
                 numbers.ItemsSource = div.ToArray();
                 await Task.Delay(150);
+                if (div.Value >= 0.99997f && div.Value <= 1.0005f)
+                    realignTrigger = true;
                 if (realignTrigger)
                     await Realign();
             }
@@ -115,6 +117,13 @@ namespace Secret_Meter
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void OpenSettings(object sender, MouseButtonEventArgs e)
+        {
+            var sts = new Settings(prefs);
+            sts.ShowDialog();
+            prefs = sts.Result;
         }
     }
 
